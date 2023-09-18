@@ -539,6 +539,8 @@ hr {
     background-color: #CCC0B9;
     border-radius: 6px;
     padding: 10px;
+    display: flex;
+    justify-content: center;
 }
 
   .ai-button {
