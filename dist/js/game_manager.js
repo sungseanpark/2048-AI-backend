@@ -19,15 +19,21 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
 
 // Autoplay the game
 GameManager.prototype.autoPlay = function () {
+
+
   this.autoToggle = !this.autoToggle;
 
   if (this.autoToggle) {
     this.autoPlayInterval = setInterval(() => {
+      if (this.over) {
+        this.autoToggle = false;
+        return;
+      }
       // Get the current grid state as a JSON object
       const gridState = this.grid.serialize(); // Assuming you have a serialize() method
 
       // Make an HTTP GET request to the backend to get a random move
-      fetch('http://localhost:3001/api/move', {
+      fetch('/api/move', {
         method: 'POST', // Use POST instead of GET
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +52,7 @@ GameManager.prototype.autoPlay = function () {
         .catch((error) => {
           console.error('Error fetching random move:', error);
         });
-    }, 250); // 1000 milliseconds (1 second) interval
+    }, 350); // 1000 milliseconds (1 second) interval
 
     // Update the button text
     // this.actuator.autoPlayButton.textContent = 'Stop Auto Play';
